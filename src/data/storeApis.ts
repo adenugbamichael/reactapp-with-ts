@@ -1,9 +1,9 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react"
 import { Product, ProductSelection } from "./entities"
-const protocol = "http"
-const hostname = "localhost"
-const port = 4600
-const baseUrl = `${protocol}://${hostname}:${port}`
+// const protocol = "http"
+// const hostname = "localhost"
+// const port = 4600
+const baseUrl = "/api"
 
 export const productsApi = createApi({
   reducerPath: "products",
