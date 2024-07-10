@@ -11,6 +11,7 @@ import {
   useAppDispatch,
   useAppSelector,
 } from "./data/dataStore"
+import { Navigate, Route, Routes } from "react-router-dom"
 // let testData: Product[] = [1, 2, 3, 4, 5].map((num) => ({
 //   id: num,
 //   name: `Prod${num}`,
@@ -32,12 +33,20 @@ export const App: FunctionComponent = () => {
 
   return (
     <div className='App'>
-      <ProductList
-        products={data ?? []}
-        categories={categories}
-        selections={selections}
-        addToOrder={addToOrder}
-      />
+      <Routes>
+        <Route
+          path='/products'
+          element={
+            <ProductList
+              products={data ?? []}
+              categories={categories}
+              selections={selections}
+              addToOrder={addToOrder}
+            />
+          }
+        />
+        <Route path='/' element={<Navigate replace to='/products' />} />
+      </Routes>
     </div>
   )
 }
