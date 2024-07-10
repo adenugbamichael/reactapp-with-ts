@@ -11,14 +11,11 @@ import {
   useAppDispatch,
   useAppSelector,
 } from "./data/dataStore"
-import { Navigate, Route, Routes } from "react-router-dom"
-// let testData: Product[] = [1, 2, 3, 4, 5].map((num) => ({
-//   id: num,
-//   name: `Prod${num}`,
-//   category: `Cat${num % 2}`,
-//   description: `Product ${num}`,
-//   price: 100,
-// }))
+import { Navigate, Route, Routes, useNavigate } from "react-router-dom"
+import { resetSelections } from "./data/selectionSlice"
+import { OrderDetails } from "./orderDetails"
+import { Summary } from "./summary"
+
 export const App: FunctionComponent = () => {
   const selections = useAppSelector((state) => state.selections)
   const dispatch = useAppDispatch()
@@ -30,6 +27,16 @@ export const App: FunctionComponent = () => {
   const categories = useMemo<string[]>(() => {
     return [...new Set(data?.map((p) => p.category))]
   }, [data])
+  const [storeOrder] = reducers.useStoreOrderMutation()
+  const navigate = useNavigate()
+  const submitCallback = () => {
+    storeOrder(selections)
+      .unwrap()
+      .then((id) => {
+        dispatch(resetSelections())
+        navigate(`/summary/${id}`)
+      })
+  }
 
   return (
     <div className='App'>
@@ -45,6 +52,16 @@ export const App: FunctionComponent = () => {
             />
           }
         />
+        <Route
+          path='/order'
+          element={
+            <OrderDetails
+              selections={selections}
+              submitCallback={() => submitCallback()}
+            />
+          }
+        />
+        <Route path='/summary/:id' element={<Summary />} />
         <Route path='/' element={<Navigate replace to='/products' />} />
       </Routes>
     </div>
