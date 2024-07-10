@@ -1,5 +1,6 @@
 import React, { FunctionComponent } from "react"
 import { ProductSelection, ProductSelectionHelpers } from "./data/entities"
+import { NavLink } from "react-router-dom"
 interface Props {
   selections: ProductSelection[]
 }
@@ -11,7 +12,16 @@ export const Header: FunctionComponent<Props> = (props) => {
       {count === 0
         ? "(No Selection)"
         : `${count} product(s), ` + `$${total.toFixed(2)}`}
-      <button className='btn btn-sm btn-primary m-1'>Submit Order</button>
+
+      {count > 0 ? (
+        <NavLink to='/order' className='btn btn-sm btn-primary m-1'>
+          Submit Order
+        </NavLink>
+      ) : (
+        <button disabled className='btn btn-sm btn-primary m-1'>
+          Submit Order
+        </button>
+      )}
     </div>
   )
 }
