@@ -64,5 +64,18 @@
       "price": 1200
     }
   ],
-  "orders": []
+  "orders": [
+    {
+      "orderData": {
+        "lines": [
+          {
+            "productId": 2,
+            "productName": "Lifejacket",
+            "quantity": 2
+          }
+        ]
+      },
+      "id": 1
+    }
+  ]
 }
